@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "209014379745",
+    "project_id": "ptracker-39b6b",
+    "storage_bucket": "ptracker-39b6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209014379745:android:1709107a0367a8950513a0",
+        "android_client_info": {
+          "package_name": "com.kodega.ptracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209014379745-vuve2ql0cfmsr1197p31sasm5n67kn0o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kodega.ptracker",
+            "certificate_hash": "c94cb8907eb7d2c4d725037cb4ebf28b5553b515"
+          }
+        },
+        {
+          "client_id": "209014379745-nvjnsvvu83bf2sj6mp06ld78jl3hrb5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq03P3YOyZDPdvsV5INnEFnOWiQsdeDQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209014379745-nvjnsvvu83bf2sj6mp06ld78jl3hrb5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

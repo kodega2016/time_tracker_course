@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PTracker</string>
+    <string name="facebook_app_id">793071765402485</string>
+    <string name="fb_login_protocol_scheme">fbb1567fe18ba459e4a6d8770027a0cc8c</string>
+    <string name="facebook_client_token">b1567fe18ba459e4a6d8770027a0cc8c</string>
+</resources>
