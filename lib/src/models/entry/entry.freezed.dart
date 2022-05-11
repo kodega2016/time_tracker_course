@@ -133,13 +133,14 @@ class __$$_EntryCopyWithImpl<$Res> extends _$EntryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Entry implements _Entry {
+class _$_Entry extends _Entry {
   _$_Entry(
       {required this.id,
       required this.jobId,
       required this.start,
       required this.end,
-      this.comment});
+      this.comment})
+      : super._();
 
   factory _$_Entry.fromJson(Map<String, dynamic> json) =>
       _$$_EntryFromJson(json);
@@ -193,13 +194,14 @@ class _$_Entry implements _Entry {
   }
 }
 
-abstract class _Entry implements Entry {
+abstract class _Entry extends Entry {
   factory _Entry(
       {required final String id,
       required final String jobId,
       required final DateTime start,
       required final DateTime end,
       final String? comment}) = _$_Entry;
+  _Entry._() : super._();
 
   factory _Entry.fromJson(Map<String, dynamic> json) = _$_Entry.fromJson;
 

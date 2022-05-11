@@ -19,7 +19,24 @@ class PElevatedButton extends StatelessWidget {
     return SizedBox(
       height: 45,
       child: ElevatedButton(
-        child: Text(label),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isLoading)
+              const Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 1.5,
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
+                  ),
+                ),
+              ),
+            Text(label),
+          ],
+        ),
         onPressed: isDisabled ? null : onPressed,
       ),
     );

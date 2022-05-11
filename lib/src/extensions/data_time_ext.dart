@@ -5,7 +5,7 @@ extension DateTimeExt on DateTime {
     return toIso8601String();
   }
 
-  String getDateString() {
-    return DateFormat('MM/dd/yyyy').format(this);
+  String get getDateString {
+    return DateFormat.yMEd().format(this);
   }
 }

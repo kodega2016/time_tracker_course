@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:ptracker/src/home/jobs/job_entries_screen.dart';
-import 'package:ptracker/src/home/jobs/job_form_screen.dart';
+import 'package:ptracker/src/app_routes.dart';
 import 'package:ptracker/src/models/job/job.dart';
 import 'package:ptracker/src/services/database.dart';
 import 'package:ptracker/src/widgets/job_list_tile.dart';
@@ -18,9 +17,13 @@ class JobsScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.small(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return JobFormScreen(db: context.read<Database>());
-          }));
+          Navigator.pushNamed(
+            context,
+            AppRoutes.jobForm,
+            arguments: {
+              'db': Provider.of<Database>(context, listen: false),
+            },
+          );
         },
         child: const Icon(Feather.plus),
       ),
@@ -45,16 +48,24 @@ class JobsScreen extends StatelessWidget {
                     context.read<Database>().deleteJob(job.id);
                   },
                   onEdit: (job) {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return JobFormScreen(
-                          db: context.read<Database>(), job: job);
-                    }));
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.jobForm,
+                      arguments: {
+                        'db': Provider.of<Database>(context, listen: false),
+                        'job': job,
+                      },
+                    );
                   },
                   onView: (job) {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return JobEntriesScreen(
-                          db: context.read<Database>(), job: job);
-                    }));
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.jobEntries,
+                      arguments: {
+                        'db': Provider.of<Database>(context, listen: false),
+                        'job': job,
+                      },
+                    );
                   },
                 );
               },

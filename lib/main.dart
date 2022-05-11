@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ptracker/src/app_routes.dart';
 import 'package:ptracker/src/landing/landing_screen.dart';
 import 'package:ptracker/src/services/auth.dart';
 import 'package:ptracker/src/themes/app_themes.dart';
@@ -22,6 +23,7 @@ class TimeTracker extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppThemes.primaryTheme,
         home: const LandingScreen(),
+        onGenerateRoute: AppRoutes.onGenerateRoute,
       ),
     );
   }

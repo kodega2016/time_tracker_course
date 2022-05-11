@@ -9,7 +9,7 @@ abstract class Database {
   Future<void> deleteJob(String id);
 
   Future<void> createOrUpdateEntry(Entry entry);
-  Stream<List<Entry>> entriesStream();
+  Stream<List<Entry>> entriesStream({String? jobId});
   Future<void> deleteEntry(String id);
 }
 
@@ -37,6 +37,12 @@ class FirestoreDatabase implements Database {
 
   @override
   Future<void> deleteJob(String id) async {
+    final _entries = await entriesStream(jobId: id).first;
+
+    for (var item in _entries) {
+      await deleteEntry(item.id);
+    }
+
     await _service.deleteData(DocPath.job(uid, id));
   }
 
@@ -54,7 +60,7 @@ class FirestoreDatabase implements Database {
   }
 
   @override
-  Stream<List<Entry>> entriesStream() {
+  Stream<List<Entry>> entriesStream({String? jobId}) {
     return _service.streamData<Entry>(
       path: DocPath.entries(uid),
       builder: (data, id) {
