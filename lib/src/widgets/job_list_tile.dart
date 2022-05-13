@@ -18,22 +18,29 @@ class JobListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Dismissible(
-        key: ValueKey(job.id),
-        direction: DismissDirection.endToStart,
-        onDismissed: (dir) async {
-          onDelete(job);
-        },
-        child: ListTile(
-          title: Text(job.title),
-          subtitle: Text('Rs.${job.rate}'),
-          onTap: () => onView(job),
-          trailing: IconButton(
-            onPressed: () async {
-              onEdit(job);
-            },
-            icon: const Icon(Feather.edit),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Card(
+        child: Dismissible(
+          key: ValueKey(job.id),
+          direction: DismissDirection.endToStart,
+          onDismissed: (dir) async {
+            onDelete(job);
+          },
+          child: ListTile(
+            title: Text(job.title),
+            subtitle: Text('Rs.${job.rate}'),
+            onTap: () => onView(job),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 4,
+              horizontal: 10,
+            ),
+            trailing: IconButton(
+              onPressed: () async {
+                onEdit(job);
+              },
+              icon: const Icon(Feather.edit),
+            ),
           ),
         ),
       ),

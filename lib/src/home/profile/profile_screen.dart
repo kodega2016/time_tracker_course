@@ -22,9 +22,8 @@ class ProfileScreen extends StatelessWidget {
                 child: user.photoURL == null
                     ? const Icon(Feather.camera, size: 15)
                     : null,
-                backgroundImage: user.photoURL != null
-                    ? const AssetImage('assets/images/avatar.png')
-                    : null,
+                backgroundImage:
+                    user.photoURL != null ? NetworkImage(user.photoURL!) : null,
               ),
               title: Text(user.displayName ?? 'Anonymous User'),
               subtitle: Text(
@@ -34,7 +33,32 @@ class ProfileScreen extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () async {
-                  context.read<BaseAuth>().signOut();
+                  await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Attention'),
+                          content:
+                              const Text('Are you sure you want to logout?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              child: const Text('Yes'),
+                              onPressed: () async {
+                                await Provider.of<BaseAuth>(context,
+                                        listen: false)
+                                    .signOut();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
                 },
                 icon: const Icon(Feather.log_out),
               ),

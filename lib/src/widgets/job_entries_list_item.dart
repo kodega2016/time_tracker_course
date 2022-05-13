@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ptracker/src/extensions/data_time_ext.dart';
 import 'package:ptracker/src/models/entry/entry.dart';
 import 'package:ptracker/src/models/job/job.dart';
-import 'package:ptracker/src/themes/app_colors.dart';
 
 class JobEntriesListItem extends StatelessWidget {
   const JobEntriesListItem({
@@ -26,28 +25,19 @@ class JobEntriesListItem extends StatelessWidget {
       child: Card(
         child: Dismissible(
           key: ValueKey(entry.id),
+          background: Container(color: Colors.red),
           direction: DismissDirection.endToStart,
           onDismissed: (dir) async {
             await onDelete(entry);
           },
-          child: ListTile(
-            isThreeLine: entry.comment == null ? false : true,
-            onTap: () => onClick(entry),
-            title: Text(
-                '${entry.start.getDateString} - ${entry.end.getDateString}'),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Rs ${job.rate} per hour [Rs.$_pay]'),
-                if (entry.comment != null) Text('${entry.comment}'),
-              ],
-            ),
-            trailing: Text(
-              'Rs $_pay',
-              style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.baseGrey,
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: ListTile(
+              onTap: () => onClick(entry),
+              title: Text(
+                  '${entry.start.getDateString} - ${entry.end.getDateStringMonth}'),
+              subtitle: Text('${entry.comment}'),
+              trailing: Text('[Rs.$_pay]'),
             ),
           ),
         ),

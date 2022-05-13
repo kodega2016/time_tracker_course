@@ -37,6 +37,13 @@ class JobEntriesScreen extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final _entries = snapshot.data!;
+
+                if (_entries.isEmpty) {
+                  return const Center(
+                    child: Text('No entries yet.'),
+                  );
+                }
+
                 return ListView.builder(
                   itemCount: _entries.length,
                   itemBuilder: (context, i) {

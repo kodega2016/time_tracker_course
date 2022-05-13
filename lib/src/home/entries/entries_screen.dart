@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ptracker/src/themes/app_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:ptracker/src/extensions/data_time_ext.dart';
+import 'package:ptracker/src/home/entries/daily_job_detail.dart';
+import 'package:ptracker/src/home/entries/entries_bloc.dart';
+import 'package:ptracker/src/widgets/entris_list_tile.dart';
 
 class EntriesScreen extends StatelessWidget {
   const EntriesScreen({Key? key}) : super(key: key);
@@ -11,91 +15,47 @@ class EntriesScreen extends StatelessWidget {
         title: const Text('Entries'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView.builder(
-          itemCount: 2,
-          itemBuilder: (context, i) {
-            return const EntriesListTile();
-          },
-        ),
-      ),
-    );
-  }
-}
+        padding: const EdgeInsets.all(10.0),
+        child: StreamBuilder<List<DailyJobDetail>>(
+          stream:
+              Provider.of<EntriesBloc>(context, listen: false).entriesStream,
+          builder: ((context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            }
 
-class EntriesListTile extends StatelessWidget {
-  const EntriesListTile({
-    Key? key,
-  }) : super(key: key);
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.baseGrey.withOpacity(0.4),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+            final _entries = snapshot.data!;
+            final _totalPay =
+                _entries.fold<double>(0, (sum, entry) => sum + entry.totalPay);
+            final _totalDuration = _entries.fold<double>(
+                0, (sum, entry) => sum + entry.totalDuration);
+
+            return Column(
+              children: [
+                EntriesListTile(
+                  title: 'All Entries',
+                  subtitle: 'Rs.$_totalPay',
+                  trailing: '$_totalDuration hrs',
+                  jobs: const [],
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: const [
-                    Expanded(child: Text('2021-01-01')),
-                    Expanded(child: Text('2021-01-01')),
-                    Expanded(child: Text('2021-01-01')),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: const [
-                  Expanded(
-                    flex: 3,
-                    child: Text('Mobile Application Developer'),
+                for (var entry in _entries)
+                  EntriesListTile(
+                    title: entry.date.getDateString,
+                    subtitle: 'Rs.${entry.totalPay}',
+                    trailing: '${entry.totalDuration} hrs',
+                    jobs: entry.jobs,
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('10 hrs'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('Rs.1200'),
-                  ),
-                ],
-              ),
-            ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: const [
-                  Expanded(
-                    flex: 3,
-                    child: Text('Mobile Application Developer'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('10 hrs'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text('Rs.1200'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+              ],
+            );
+          }),
         ),
       ),
     );

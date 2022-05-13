@@ -14,7 +14,7 @@ class AppThemes {
     cardTheme: CardTheme(
       elevation: 1,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(4),
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(

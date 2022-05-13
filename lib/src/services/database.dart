@@ -63,6 +63,9 @@ class FirestoreDatabase implements Database {
   Stream<List<Entry>> entriesStream({String? jobId}) {
     return _service.streamData<Entry>(
       path: DocPath.entries(uid),
+      queryBuilder: jobId == null
+          ? null
+          : (query) => query.where('jobId', isEqualTo: jobId),
       builder: (data, id) {
         data['id'] = id;
         return Entry.fromJson(data);

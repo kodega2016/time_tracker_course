@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:ptracker/src/home/entries/entries_bloc.dart';
 import 'package:ptracker/src/home/entries/entries_screen.dart';
 import 'package:ptracker/src/home/jobs/jobs_screen.dart';
 import 'package:ptracker/src/home/profile/profile_screen.dart';
+import 'package:ptracker/src/services/database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,7 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentScreen = 0;
   final _pages = [
     const JobsScreen(),
-    const EntriesScreen(),
+    Builder(builder: (context) {
+      return Provider<EntriesBloc>(
+        create: (_) => EntriesBloc(db: Provider.of<Database>(context)),
+        child: const EntriesScreen(),
+      );
+    }),
     const ProfileScreen(),
   ];
 

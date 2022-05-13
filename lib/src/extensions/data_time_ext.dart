@@ -6,6 +6,10 @@ extension DateTimeExt on DateTime {
   }
 
   String get getDateString {
-    return DateFormat.yMEd().format(this);
+    return DateFormat.yMMMEd().format(this);
+  }
+
+  String get getDateStringMonth {
+    return DateFormat.MMMEd().format(this);
   }
 }
